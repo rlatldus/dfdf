@@ -1,0 +1,41 @@
+@charset "utf-8";
+
+/* 추가 기본 설정 모음 */
+/* :root {font-size: 62.5%;} */
+body *, * {box-sizing: border-box;}
+a {text-decoration: none; color: inherit;}
+b, strong {font-weight: 700;}
+button {border: 0 none; cursor: pointer;}
+.mont,
+.mont * {font-family: 'Montserrat', 'Noto Sans KR', sans-serif;}
+.for-m, .for-m-flex {display: none !important;}
+.font-primary {color: #F65227 !important;}
+
+/* 사용자 설정 */
+.w-set {width: 1480px; margin: 0 auto;}
+.clear:after {content: ''; display: block; clear: both;}
+
+.blind {display: none !important;}
+
+/* html {scroll-behavior: smooth;} */
+
+/* checkbox */
+.checkbox-custom label {cursor: pointer;}
+.checkbox-custom label span {position: relative;}
+.checkbox-custom label input {position: absolute; width: 0px; height: 0px; opacity: 0;}
+.checkbox-custom label span:before {content: ''; display: block; position: absolute; top: 50%; left: 0; margin-top: -9px; width: 18px; height: 18px; border: 1px solid #C4C5C9; border-radius: 6px; background: #fff; box-sizing: border-box;}
+.checkbox-custom label input:checked + span:before {background: url(../images/goods/checkbox_on.png) no-repeat center center; background-size: 18px auto; border: 0 none;}
+
+img {overflow: hidden;}
+
+/* 커서 이미지 적용 */
+* {cursor: url(../images/common/cart_mouse04.png) 0 0, url(../images/common/cart_mouse03.png) 0 0, url(../images/common/cursor_golf7.png) 0 0, default !important;}
+
+@media only screen and (max-width: 1480px) {
+	.w-set {width: 100%; padding-left: 15px; padding-right: 15px;}
+}
+@media only screen and (max-width: 768px) {
+	.for-pc {display: none !important;}
+	.for-m {display: block !important;}
+	.for-m-flex {display: flex !important;}
+}

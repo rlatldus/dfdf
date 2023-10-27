@@ -1,0 +1,307 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title>*** NHN KCP API SAMPLE ***</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=yes, target-densitydpi=medium-dpi">
+    <meta charset="utf-8">
+    <link href="/public/static/css/style.css" rel="stylesheet" type="text/css" id="cssLink"/>
+    
+    <script src="https://unpkg.com/axios@0.26.1/dist/axios.min.js"></script>
+    <!--
+        결제창 호출 JS
+        개발 : https://testpay.kcp.co.kr/plugin/payplus_web.jsp
+        운영 : https://pay.kcp.co.kr/plugin/payplus_web.jsp
+    -->
+    <!--운영-->
+    <script type="text/javascript" src="https://pay.kcp.co.kr/plugin/payplus_web.jsp"></script>
+    <!--개발-->
+    <!-- <script type="text/javascript" src="https://testpay.kcp.co.kr/plugin/payplus_web.jsp"></script> -->
+
+    <script type="text/javascript" defer>
+        window.onpageshow = function(event) {
+            if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            
+            window.location.href="/gooduser";
+            }
+        }
+        window.onload = async function() {
+            
+            
+            let urlHost = '';
+            
+            const getuserId = window.location.search;
+            const params = new URLSearchParams(getuserId);
+            
+            const userId = parseInt(params.get("u"));
+            const buyType = params.get("t");
+            const paymentType = params.get("p");
+            
+            const cart = await cartData();
+            
+            document.getElementById("userId").setAttribute('value', userId);// 앞단에서 회원 받아오면 변경
+            document.getElementById("buyType").setAttribute('value', buyType);
+            document.getElementById("paymentType").setAttribute('value', paymentType);
+            document.getElementById("ordr_idxx").setAttribute('value', cart.bagLists[0].id); // 앞단에서 회원 받아오면 변경
+            document.getElementById("buyr_name").setAttribute('value', cart.username);
+            document.getElementById("buyr_tel1").setAttribute('value', cart.telephone);
+            document.getElementById("buyr_tel2").setAttribute('value', cart.telephone);
+            document.getElementById("good_name").setAttribute('value', cart.textName);
+            document.getElementById("good_mny").setAttribute('value', cart.totalPrice);
+            
+            
+            //선물하기
+            if(buyType=="G"){
+                document.getElementById("reciverName").setAttribute('value', cart.reciverName);
+                document.getElementById("reciverTel").setAttribute('value', cart.reciverTel);
+                document.getElementById("sendMsg").setAttribute('value', cart.sendMsg);
+            }
+            
+            
+            var form = document.order_info
+            jsf__pay( form )
+
+        };
+
+    </script>
+    <script type="text/javascript" defer>
+        async function cartData(){
+
+            var bagId = localStorage.getItem('buy')
+            const getuserId = window.location.search;
+            const params = new URLSearchParams(getuserId);
+            const userId = parseInt(params.get("u"));
+            const buyType = params.get("t");
+            var getcartData, url1, reqUser
+            
+            var tmparr = bagId.split(',')
+                        
+            url1 = '/gooduser/api/v1/bag/insert_total_payment_price'
+            bagIds = {bagIds: tmparr}
+    
+            await axios.post(url1,bagIds,{t: localStorage.getItem('T')}).then(res=>{
+                console.log(res)
+                if(res.data.code == 200){
+                    getcartData = res.data.data
+                }else{
+                    alert('결제에 실패하였습니다')
+                    window.location.href = `/gooduser/cartview/cartview/a`
+                }
+
+                
+                
+            })
+            
+            return getcartData
+        }
+
+        async function m_Completepayment( FormOrJson, closeEvent )
+        {
+            var frm = document.order_info;
+
+            GetField( frm, FormOrJson );
+
+            if( frm.res_cd.value == "0000" )
+            {
+                
+                //업체 연동 시 필수 확인 사항.
+                /*
+                가맹점 리턴값 처리 영역
+                */
+                
+                
+                let req_data = {}
+                if(frm.buyType.value !='P'){
+                    req_data ={
+                        tran_cd : frm.tran_cd.value,
+                        site_cd : frm.site_cd.value,
+                        enc_data : frm.enc_data.value,
+                        enc_info : frm.enc_info.value,
+                        ordr_mony : frm.good_mny.value,
+                        buyType : frm.buyType.value,
+                        paymentType: frm.paymentType.value,
+                        totalPaymentPrice: frm.good_mny.value,
+                        shippingAddressId: localStorage.getItem('shAI'),
+                    };
+                }else{
+                    req_data ={
+                        tran_cd : frm.tran_cd.value,
+                        site_cd : frm.site_cd.value,
+                        enc_data : frm.enc_data.value,
+                        enc_info : frm.enc_info.value,
+                        ordr_mony : frm.good_mny.value,
+                        buyType : frm.buyType.value,
+                        paymentType: frm.paymentType.value,
+                        totalPaymentPrice: frm.good_mny.value,
+                        giftId: localStorage.getItem('GI'),
+                    };
+                }
+                // 결제 API URL
+                // 개발 : https://stg-spl.kcp.co.kr/gw/enc/v1/payment
+                // 운영 : https://spl.kcp.co.kr/gw/enc/v1/payment
+                await fetch("/gooduser/api/v1/payment/complete", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(req_data),
+                })
+                    // 결제 API RES
+                    .then(response =>response.json())
+                    .then(data => {
+                        //let resultData = {...data.data, ...userData}
+                        if(data.code===200){
+                            
+                            alert('주문이 완료 되었습니다')
+                            window.location.href = `/gooduser/cartview/orderfinish/${data.data.paymentProductId}`;
+                        }else{
+                            alert('결제에 실패하였습니다')
+                            window.location.href = `/gooduser/cartview/cartview/a`
+                        }
+                          
+                        
+                    }).catch(error => {
+                        alert(error)
+                        alert( "[" + frm.res_cd.value + "] " + frm.res_msg.value );
+                        closeEvent();
+                        
+                        window.location.href = `/gooduser/cartview/cartview/a`;
+                    });
+            }
+            else
+            {
+                alert( "[" + frm.res_cd.value + "] " + frm.res_msg.value );
+                closeEvent();
+                
+                window.location.href = `/gooduser/cartview/cartview/a`;
+            }
+        }
+
+    </script>
+
+    <script type="text/javascript">
+        /* 표준웹 실행 */
+
+        function jsf__pay( form )
+        {
+            
+            try
+            {
+                
+                KCP_Pay_Execute( form );
+            }
+            catch (e)
+            {
+                /* IE 에서 결제 정상종료시 throw로 스크립트 종료 */
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="loadinglayer" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; background: url(loading.gif) no-repeat center center rgba(0,0,0,0.7);"></div>
+
+<form name="order_info" method="post" accept-charset="euc-kr">
+    <div class="wrap">
+        <!-- header -->
+        <div class="header">
+
+        </div>
+        <!-- //header -->
+        <!-- contents -->
+        <div id="skipCont" class="contents">
+            <ul class="list-type-1">
+                <div class="right">
+                    <div class="ipt-type-1 pc-wd-2">
+                        <input type="hidden" name="ordr_idxx" id="ordr_idxx" value="" maxlength="40" />
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="ipt-type-1 pc-wd-2">
+                        <input type="hidden" name="good_name" id="good_name" value="" />
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="ipt-type-1 gap-2 pc-wd-2">
+                        <input type="hidden" name="good_mny" id="good_mny" value="1000" maxlength="9" />
+
+                    </div>
+                </div>
+                <!-- </li> -->
+            </ul>
+            <div class="line-type-1"></div>
+            <!-- 주문정보 -->
+            <!-- <h2 class="title-type-3">주문정보</h2> -->
+            <ul class="list-type-1">
+                <!-- 주문자명(buyr_name) -->
+                <div class="right">
+                    <div class="ipt-type-1 pc-wd-2">
+                        <input type="hidden" name="userId" id="userId" value="" />
+                        <input type="hidden" name="buyType" id="buyType" value="" />
+                        <input type="hidden" name="paymentType" id="paymentType" value="" />
+                        <input type="hidden" name="reciverName" id="reciverName" value="" />
+                        <input type="hidden" name="reciverTel" id="reciverTel" value="" />
+                        <input type="hidden" name="sendMsg" id="sendMsg" value="" />
+                        
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="ipt-type-1 pc-wd-2">
+                        <input type="hidden" name="buyr_name" id="buyr_name" value="" />
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="ipt-type-1 pc-wd-2">
+                        <input type="hidden" name="buyr_tel1" id="buyr_tel1" value="" />
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="ipt-type-1 pc-wd-2">
+                        <input type="hidden" name="buyr_tel2" id="buyr_tel2" value="" />
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="ipt-type-1 pc-wd-2">
+                        <input type="hidden" name="buyr_mail" id="buyr_mail" value="" />
+                    </div>
+                </div>
+            </ul>
+            <div class="line-type-1"></div>
+            
+            <ul class="list-check-1">
+                <input type="radio" id="radio-2-1" name="pay_method" value="100000000000" checked />
+                
+            </ul>
+            <div Class="Line-Type-1"></div>
+            <ul class="list-btn-2">
+                
+            </ul>
+        </div>
+        <!-- //contents -->
+
+
+        <!-- 가맹점 정보 설정-->
+        <!--운영-->
+        <input type="hidden" name="site_cd" id="site_cd"        value="AIG11" />
+        <!--개발-->
+        <!-- <input type="hidden" name="site_cd" id="site_cd"        value="T0000" /> -->
+
+        <input type="hidden" name="site_name" id="site_name"      value="삼성물산복지몰" />
+        <input type="hidden" name="pay_method" value="" />
+        <input type="hidden" name="res_cd"          value=""/>
+        <input type="hidden" name="res_msg"         value=""/>
+        <input type="hidden" name="enc_info"        value=""/>
+        <input type="hidden" name="enc_data"        value=""/>
+        <input type="hidden" name="ret_pay_method"  value=""/>
+        <input type="hidden" name="tran_cd"         value=""/>
+        <input type="hidden" name="use_pay_method"  value=""/>
+        <input type="hidden" name="ordr_chk"        value=""/>
+        <input type="hidden" name="cash_yn"         value=""/>
+        <input type="hidden" name="cash_tr_code"    value=""/>
+        <input type="hidden" name="cash_id_info"    value=""/>
+
+        
+    </div>
+</form>
+
+</body>
+</html>

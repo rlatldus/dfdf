@@ -1,0 +1,250 @@
+/*
+	프로모션 - 브랜드 리스트
+*/
+.promotion-brand-name {padding: 39px 20px 43px; font-size: 38px; color: #000000; line-height: 55px; font-weight: 700; text-align: center;}
+.brnad-list-title {display: block; font-size: 30px; color: #000000; line-height: 44px;}
+.brnad-list-title b {font-weight: 500;}
+/* 브랜드 리스트 상단 슬라이드 */
+.poromotion-brand-slide {background: #F3F4F8; padding: 38px 0 23px;}
+.poromotion-brand-slide .promo-slide {margin-top: 19px;}
+.promo-s-list .promo-s-img {position: relative; background: #fff; border: 1px solid #ccc; height: 200px; border-radius: 4px;}
+.promo-s-list .promo-s-img .like {right: 16px; bottom: 16px;}
+.promo-s-list .promo-s-img a {display: block; width: 100%; height: 100%; line-height: 198px; text-align: center;}
+.promo-s-list .promo-s-img a img {object-fit: contain; vertical-align: middle; max-width: 100%; max-height: 100%; vertical-align: middle;}
+.promo-s-list .promo-s-txt {margin-top: 20px; text-align: center;}
+.promo-s-list .promo-s-txt a {display: block; font-size: 18px; color: #262628; font-weight: 700; line-height: 26px;}
+/* 브랜드 리스트 sort */
+.brand-letter-filter-wrap {}
+.brand-letter-filter {font-size: 0; text-align: center; padding: 60px 0 20px;}
+.brand-letter-filter li {display: inline-block; vertical-align: top; margin: 0 6px;}
+.brand-letter-filter li button {width: 45px; height: 45px; background: #fff; border: 1px solid #CCCCCC; font-size: 20px; color: #888888; font-weight: 500;}
+.brand-letter-filter li.on button {background-color: #262628; border-color: #262628; color: #fff;}
+.brand-letter-filter li.all button {width: 80px;}
+
+.brand-search {display: flex; align-items: center; justify-content: center; margin-top: 57px;}
+.brand-search .b-s-bef-text {font-size: 20px; color: #262628; padding-right: 20px; font-weight: 500;}
+.brand-search .b-s-form {display: block; position: relative; width: 520px;}
+.brand-search .b-s-form input[type="text"] {width: 100%; height: 48px; padding: 0 58px 0 30px; background: #F3F4F8; border: 0 none; border-radius: 24px; font-size: 14px; color: #888888;}
+.brand-search .b-s-form button[type="submit"] {position: absolute; top: 0; right: 10px; width: 48px; height: 48px; background: url(../images/common/hd_search.png) no-repeat center center; background-size: 24px auto; border: 0 none; font-size: 0; cursor: pointer;}
+
+.promo-s-wrap {font-size: 0;}
+.promo-s-wrap .promo-s-list {display: inline-block;}
+.promo-s-wrap.pc-5 {margin-top: -20px; margin-left: -40px;}
+.promo-s-wrap.pc-5 .promo-s-list {width: calc(20% - 40px); margin-top: 60px; margin-left: 40px;}
+
+/* 
+	프로모션 - 베스트
+*/
+.best-sort {display: flex; justify-content: space-between; align-items: center; padding-top: 40px; padding-bottom: 20px;}
+.best-sort select {
+	-o-appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	height: 24px; padding-right: 24px; background: url(../images/common/cate_select_arr.png) no-repeat right center; background-size: 13px auto; border: 0 none; font-size: 16px; color: #3A3A3C; cursor: pointer;
+}
+.brand-cate {font-size: 0;}
+.brand-cate::-webkit-scrollbar {display: none;}
+.brand-cate li {display: inline-block; position: relative; font-size: 16px; line-height: 24px;}
+.brand-cate li:not(:first-child) {padding-left: 40px;}
+.brand-cate li:not(:first-child):before {content: ''; display: block; position: absolute; top: 50%; left: 20px; transform: translateY(-46%); width: 1px; height: 12px; background: #AAAAAA;}
+.brand-cate li a {display: block; color: #262628;}
+.brand-cate li a:hover,
+.brand-cate li.on a {color: #F37321; font-weight: 700;}
+.best-top-wrap {background: #F3F4F8; padding: 40px 0;}
+.best-top-wrap .goods-list {margin: 0; padding: 0;}
+.best-top-flex {display: flex; justify-content: space-between;}
+.best-top-flex .goods-list {flex: 1;}
+
+/* 
+	프로모션 - 이벤트
+*/
+.event-banner {display: flex; align-items: center;}
+.event-banner h2 {font-size: 50px; color: #FFFFFF; line-height: 73px; text-align: center; font-weight: 400;}
+.event-banner .event-banner-tab {padding-top: 100px; font-size: 0; text-align: center;}
+.event-banner .event-banner-tab a {display: inline-block; vertical-align: top; padding: 0 30px; margin: 0 20px; border: 1px solid #FFFFFF; height: 48px; border-radius: 24px; font-size: 18px; color: #FFFFFF; line-height: 46px;}
+.event-banner .event-banner-tab a:hover,
+.event-banner .event-banner-tab a.on {background: #fff; color: #5B6286;}
+/* 샘플 BG */
+.event-banner.type-sample-bg {background: url('../images/etc/promotion_banner_bg.png') no-repeat center center #5B6286; background-size: cover; height: 400px;}
+/* 이벤트 게시판 타입 */
+.board-list.for-event {padding-top: 80px;}
+.board-list.type-gallery {margin: 0 0 0 -40px; font-size: 0;}
+.board-list.type-gallery .div-3 {border: 1px solid #DDDDDD; border-width: 1px 0 0 0; margin: 60px 0 60px 40px;}
+.board-list.type-gallery a {display: inline-block; vertical-align: top; width: calc(33.33% - 40px); margin: 0 0 0 40px;}
+.board-list.type-gallery .pic {position: relative; padding-bottom: 60.08%; overflow: hidden; border-radius: 6px;}
+.board-list.type-gallery .pic img {position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;}
+.board-list.type-gallery .txt-box {margin-top: 40px;}
+.board-list.type-gallery .txt-box .post-name {font-size: 18px; color: #262628; line-height: 26px; font-weight: 700;}
+.board-list.type-gallery .txt-box .post-content {margin-top: 20px; font-size: 14px; color: #262628; line-height: 20px;}
+.board-list.type-gallery .txt-box .post-date {display: flex; align-items: center; margin-top: 20px;}
+.board-list.type-gallery .txt-box .post-date .date-dday {display: block; padding: 4px 5px; background: #3A3A3C; border-radius: 6px; font-size: 12px; color: #FFFFFF; line-height: 100%;}
+.board-list.type-gallery .txt-box .post-date .date-txt {font-size: 14px; color: #888888; line-height: 20px;}
+.board-list.type-gallery .txt-box .post-date .date-dday + .date-txt {padding-left: 10px;}
+/* 이벤트 게시판 상세 */
+.board-head {padding: 57px 0 40px;}
+.board-head .post-title {font-size: 30px; color: #262628; line-height: 44px; font-weight: 700;}
+.board-head .post-desc {padding-top: 8px; font-size: 20px; color: #888888; line-height: 30px;}
+.event-image-banner img {width: 100%;}
+.event-goods {margin-top: 80px;}
+.event-more {margin-top: 80px; text-align: center; font-size: 0;}
+.event-more a {display: inline-block; width: 160px; height: 60px; border-radius: 6px; background: #262628; font-size: 16px; color: #F3F4F8; line-height: 60px;}
+.event-detail-content {text-align: center;}
+.event-detail-content img {width: auto; max-width: 100%;}
+
+/* 
+	프로모션 - HOT TAG
+*/
+.top-banner-promotion {}
+.top-banner-promotion img {width: 100%;}
+.type-hottag .goods-count {margin-top: 40px;}
+.type-hottag .goods-list {padding-top: 15px;}
+
+/* 
+	프로모션 - 골프 TV
+*/
+.golf-tv {margin: -40px 0 0 -35px; font-size: 0;}
+.golf-tv .tv-list {display: inline-block; vertical-align: top; width: calc(33.33% - 35px); margin: 40px 0 0 35px;}
+.golf-tv .tv-list .movie-wrap {position: relative; height: 0; padding-bottom: 56.25%;}
+.golf-tv .tv-list .movie-wrap iframe,
+.golf-tv .tv-list .movie-wrap img {position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;}
+.golf-tv .tv-list .movie-wrap .movie-play {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: url('../images/etc/btn_play.png') no-repeat center center; background-size: 100% 100%; border: 0 none; font-size: 0;}
+.golf-tv .tv-list .board-box {border: 1px solid #DDDDDD; border-top: 0; padding: 30px;}
+.golf-tv .tv-list .movie-info {font-size: 0; text-align: right;}
+.golf-tv .tv-list .movie-info .movie-name {font-size: 24px; color: #262628; line-height: 35px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left;}
+.golf-tv .tv-list .movie-info .movie-more {display: inline-block; margin-top: 10px;}
+.golf-tv .tv-list .movie-info .movie-more span {display: block; padding-right: 10px; background: url('../images/common/ico_more.png') no-repeat right center; background-size: auto 10px; font-size: 14px; color: #262628; line-height: 20px;}
+.golf-tv .tv-list .goods-list {padding-top: 27px;}
+.golf-tv .tv-list .movie-goods-more {display: block; margin: 40px auto 0; background: none; border: 0 none;}
+.golf-tv .tv-list .movie-goods-more span {display: block; padding-right: 20px; background: url('../images/common/ico_more_plus.png') no-repeat right center; background-size: 12px auto; font-size: 18px; color: #262628; line-height: 26px;}
+.golf-tv + .pagination {margin-top: 80px;}
+/* 상세 */
+.tv-view {position: relative;}
+.tv-view .bg {position: absolute; top: 0; left: 0; z-index: 1; width: 100%; height: 400px; background: #F3F4F8;}
+.tv-view .w-set {position: relative; z-index: 2;}
+.tv-view h2 {padding-top: 40px; font-size: 30px; color: #262628; line-height: 44px; text-align: center;}
+.tv-view .movie-view {position: relative; max-width: 900px;  margin: 20px auto 0;}
+.tv-view .movie-view:after {content: ''; display: block; padding-bottom: 57.30%;}
+.tv-view .movie-view iframe {position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
+.for-tv-view .goods-list {padding-top: 60px;}
+.for-tv-view .pagination {margin-top: 80px;}
+
+@media only screen and (min-width: 768px) {
+	.board-list.type-gallery.title-after-top {padding-top: 17px;}
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1480px) {
+	.promo-s-wrap.t-3 {margin-top: 20px; margin-left: -20px;}
+	.promo-s-wrap.t-3 .promo-s-list {width: calc(33% - 20px); margin-top: 20px; margin-left: 20px;}
+}
+
+
+@media only screen and (max-width: 768px) {
+	/*
+		프로모션 - 브랜드 리스트
+	*/
+	.promotion-brand-name {display: none;}
+	.brnad-list-title {font-size: 16px; line-height: 23px;}
+	/* 브랜드 리스트 상단 슬라이드 */
+	.poromotion-brand-slide {background: transparent; padding: 31px 0 0;}
+	.poromotion-brand-slide .promo-slide .promo-s-list .promo-s-img {height: 158px;}
+	.poromotion-brand-slide .promo-slide .promo-s-list .promo-s-img .like {right: 16px; bottom: 10px;}
+	.poromotion-brand-slide .promo-slide .promo-s-list .promo-s-img a {line-height: 156px;}
+	.poromotion-brand-slide .promo-slide .promo-s-list .promo-s-txt {text-align: left;}
+	.poromotion-brand-slide .promo-slide .promo-s-list .promo-s-txt a {font-size: 15px; line-height: 22px;}
+	/* 브랜드 리스트 sort */
+	.brand-sort {margin-top: 60px; margin: 0 -15px;}
+	.brand-letter-filter-wrap {overflow: scroll;}
+	.brand-letter-filter {margin: 0 5px; padding: 0 5px; border: 0 none; white-space: nowrap;}
+	.brand-letter-filter li {margin: 0 5px;}
+	.brand-letter-filter li button {width: 35px; height: 35px; font-size: 15px;}
+	.brand-letter-filter li.all button {width: 58px;}
+
+	.promo-s-wrap.m-2 {margin-top: 20px; margin-left: -20px;}
+	.promo-s-wrap.m-2 .promo-s-list {width: calc(50% - 20px); margin-top: 20px; margin-left: 20px;}
+
+	/* 
+		프로모션 - 베스트
+	*/
+	.best-top-wrap {padding: 30px 0;}
+	.brand-cate {white-space: nowrap; overflow: scroll; padding: 0 15px; margin: 0 -15px;}
+	.brand-cate li {}
+	.best-sort {padding-top: 20px;}
+	.type-best .tab_type_01 {margin-top: 30px; height: 42px;}
+	.type-best .tab_type_01 li {height: 42px;}
+	.type-best .tab_type_01 li a,
+	.type-best .tab_type_01 li.on a {height: 40px; font-size: 14px; line-height: 40px;}
+	.type-best .tab_type_01 li.on a {height: 42px;}
+	/* .best-top-wrap .goods-list {margin: 0; padding: 0;} */
+
+	.brand-det-cate ul {white-space: nowrap; overflow-x: scroll;}
+	.brand-det-cate ul::-webkit-scrollbar {display: none;}
+	.brand-det-cate ul {padding: 30px 15px 20px; margin: 0 -15px;}
+	.brand-det-cate ul > li {display: inline-block; vertical-align: top;}
+	.brand-det-cate ul > li:not(:first-child) {margin-left: 17px;}
+	.brand-det-cate ul > li a {display: block; padding-bottom: 2px; font-size: 14px; color: #C4C5C9; line-height: 20px; border-bottom: 2px solid transparent;}
+	.brand-det-cate ul > li.on a {border-bottom-color: #F37321; color: #F37321;  font-weight: 700;}
+
+	/* 
+		프로모션 - 이벤트
+	*/
+	.event-banner {margin-top: 30px;}
+	.event-banner h2 {font-size: 21px; line-height: 30px;}
+	.event-banner .event-banner-tab {margin: 0 -15px; padding: 30px 15px 0; white-space: nowrap; overflow-x: auto;}
+	.event-banner .event-banner-tab::-webkit-scrollbar {display: none;}
+	.event-banner .event-banner-tab a {padding: 0 20px; margin: 0 0 0 30px; height: 36px; border-radius: 18px; font-size: 13px; line-height: 34px;}
+	/* 샘플 BG */
+	.event-banner.type-sample-bg {height: 180px; background-image: none;}
+	/* 이벤트 게시판 타입 */
+	.board-list.for-event {padding-top: 30px;}
+	.board-list.type-gallery {margin: 0 0 0 0;}
+	.board-list.type-gallery .div-3 {display: none;}
+	.board-list.type-gallery a {width: 100%; margin: 0 0 40px 0;}
+	.board-list.type-gallery .pic {height: 0; padding-bottom: 60.08%;}
+	.board-list.type-gallery .txt-box {margin-top: 20px;}
+	.board-list.type-gallery .txt-box .post-name {font-size: 15px; line-height: 22px;}
+	.board-list.type-gallery .txt-box .post-content {margin-top: 10px; font-size: 13px; line-height: 18px;}
+	.board-list.type-gallery .txt-box .post-date {margin-top: 10px;}
+	.board-list.type-gallery .txt-box .post-date .date-dday {padding: 4px 5px;}
+	.board-list.type-gallery .txt-box .post-date .date-txt {font-size: 13px; line-height: 20px;}
+	.board-list.type-gallery .txt-box .post-date .date-dday + .date-txt {padding-left: 20px;}
+	.board-list.type-gallery + .pagination {margin-top: 0;}
+	/* 이벤트 게시판 상세 */
+	.board-head {padding: 31px 0 40px;}
+	.board-head .post-title {font-size: 15px; line-height: 22px;}
+	.board-head .post-desc {padding-top: 10px; font-size: 13px; line-height: 18px;}
+	.event-goods {margin-top: 30px;}
+	.event-goods .goods-list {padding-top: 0;}
+	.event-more {margin-top: 40px;}
+	.event-more a {width: 80px; height: 50px; font-size: 14px; line-height: 50px;}
+
+	/* 
+		프로모션 - HOT TAG
+	*/
+	.top-banner-promotion {margin-top: 0;}
+	.type-hottag .goods-count {margin-top: 60px;}
+	.type-hottag .goods-list {padding-top: 20px;}
+
+	/* 
+		프로모션 - 골프 TV
+	*/
+	.golf-tv {margin: 32px 0 0 0;}
+	.golf-tv .tv-list {width: 100%; margin: 0 0 0 0;}
+	.golf-tv .tv-list + .tv-list {margin-top: 40px;}
+	.golf-tv .tv-list .movie-wrap .movie-play {background-image: url('../images/etc/btn_play.png');}
+	.golf-tv .tv-list .board-box {padding: 20px;}
+	.golf-tv .tv-list .movie-info {display: flex; justify-content: space-between; align-items: center; text-align: left;}
+	.golf-tv .tv-list .movie-info .movie-name {flex: 1; font-size: 14px; line-height: 20px;}
+	.golf-tv .tv-list .movie-info .movie-more {margin-top: 0;}
+	.golf-tv .tv-list .movie-info .movie-more span {padding-right: 10px; background-image: url('../images/common/ico_more.png'); background-size: auto 10px; line-height: 18px;}
+	.golf-tv .tv-list .goods-list {padding-top: 23px;}
+	.golf-tv .tv-list .movie-goods-more {margin: 40px auto 0;}
+	.golf-tv .tv-list .movie-goods-more span {padding-right: 20px; background-image: url('../images/common/ico_more_plus.png'); background-size: 12px auto; font-size: 14px; line-height: 20px;}
+	.golf-tv + .pagination {margin-top: 40px;}
+	/* 상세 */
+	.tv-view .bg {height: 170px;}
+	.tv-view h2 {padding-top: 31px; font-size: 15px; line-height: 22px;}
+	.tv-view .movie-view {margin: 20px 15px 0;}
+	.for-tv-view .goods-list {padding-top: 60px;}
+	.for-tv-view .pagination {margin-top: 40px;}
+}

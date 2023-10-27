@@ -1,0 +1,351 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title>*** NHN KCP API SAMPLE ***</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=yes, target-densitydpi=medium-dpi">
+    <meta charset="UTF-8" />
+    <link href="/public/static/css/style.css" rel="stylesheet" type="text/css" id="cssLink"/>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <script src="https://unpkg.com/axios@0.26.1/dist/axios.min.js"></script>
+    <!--
+        결제창 호출 JS
+        개발 : https://testpay.kcp.co.kr/plugin/payplus_web.jsp
+        운영 : https://pay.kcp.co.kr/plugin/payplus_web.jsp
+    -->
+
+    <!-- 운영 -->
+    <script type="text/javascript" src="https://pay.kcp.co.kr/plugin/payplus_web.jsp"></script>
+    <!-- 개발 -->
+    <!-- <script type="text/javascript" src="https://testpay.kcp.co.kr/plugin/payplus_web.jsp"></script> -->
+    
+
+    <!-- <script type="text/javascript" src="./payplus_web.jsp"></script> -->
+
+    <script type="text/javascript" defer>
+        window.onpageshow = function(event) {
+            if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            
+            window.location.href="/gooduser";
+            }
+        }
+         window.onload = async function jsf__chk_type()
+        {
+            // let urlHost = '';
+            // if (!(window.location.host == 'qa.golfsamsung.com' || window.location.host == 'localhost:8081')) {
+            //     urlHost = 'https://testpay.kcp.co.kr/plugin/payplus_web.jsp';
+            // }else{
+            //     urlHost = 'https://pay.kcp.co.kr/plugin/payplus_web.jsp';
+            // }
+
+
+            var bagId = localStorage.getItem('buy')
+            const getuserId = window.location.search;
+            const params = new URLSearchParams(getuserId);
+            const userId = parseInt(params.get("u"));
+            const buyType = params.get("t");
+            var getcartData, url1, reqUser
+
+            var tmparr = bagId.split(',')
+            
+            // if (buyType ==='Y') {
+            //     url1 = '/gooduser/api/v1/payment_product_api/payment_search_id_buy_multi'
+            //     reqUser = {memberId : userId, bagId:tmparr[0]}
+            // }else{
+                url1 = '/gooduser/api/v1/bag/insert_total_payment_price'
+                bagIds = {bagIds: tmparr}
+            // }
+                
+            
+            await axios.post(url1,bagIds,{t: localStorage.getItem('T')}).then(res=>{
+                if(res.data.code == 200){
+                    getcartData = res.data.data
+                }else{
+                    alert('결제에 실패하였습니다')
+                    window.location.href = `/gooduser/cartview/cartview/a`
+                }
+            })
+            
+            
+            document.order_info.good_mny.value = getcartData.totalPrice;
+            document.pay_form.good_mny.value = getcartData.totalPrice;
+            
+            document.order_info.good_name.value = getcartData.textName;
+            document.pay_form.good_name.value = getcartData.textName;
+            document.order_info.ordr_idxx.value = getcartData.bagLists[0].id
+            document.pay_form.ordr_idxx.value = getcartData.bagLists[0].id
+            document.order_info.buyr_name.value = getcartData.username
+            document.pay_form.buyr_name.value = getcartData.username
+            document.order_info.buyr_tel1.value = getcartData.telephone
+            document.pay_form.buyr_tel1.value = getcartData.telephone
+            document.order_info.buyr_tel2.value = getcartData.telephone
+            document.pay_form.buyr_tel2.value = getcartData.telephone
+            
+            var frm = document.pay_form;
+            var frm2 = document.order_info;
+
+            var req_data = {
+                site_cd : frm.site_cd.value,
+                ordr_idxx : frm.ordr_idxx.value,
+                good_mny : frm.good_mny.value,
+                good_name : frm.good_name.value,
+                pay_method : frm.pay_method.value,
+                Ret_URL : frm.Ret_URL.value,
+                escw_used : 'N',
+                user_agent : ''
+            }
+            //RESPONSE FROM /gooduser/api/v1/kcp/mobile/register           
+            // Code: "0000"
+            // Message: "Success"
+            // PayUrl: "https://testsmpay.kcp.co.kr/pay/mobileGW.kcp"
+            // approvalKey: "BsNLkCak82lu+HJyZVPlyQcHyKIPdQ/iE35VBPEo1cQ="
+            // hashData: "2a01263744c985075482213772d904cd6d8e68abe1b4be5e5ad3b2c87bfd2c23"
+            // paymentMethod: "CARD"
+            // request_URI: ""
+            // traceNo: "T0000L9DSOTDDUCT"
+
+            let Code,approvalKey,hashData,traceNo,pay_method,PayUrl
+            let url = `/gooduser/api/v1/payment/mobile/register`
+            await axios.post(url,req_data).then(res=>{
+                if(res.data.code == 200){
+                    approvalKey = res.data.data.approvalKey
+                    hashData = res.data.data.hashData
+                    traceNo = res.data.data.traceNo
+                    res_cd = res.data.data.Code
+                    PayUrl = res.data.data.PayUrl
+                    
+                    
+                    document.order_info.approval.value = approvalKey
+                    document.order_info.traceNo.value = traceNo
+                    document.order_info.PayUrl.value = PayUrl
+                    
+                    document.pay_form.res_cd.value = res_cd
+                    
+                    chk_pay();
+                    call_pay_form()
+                }else{
+                    alert('결제에 실패하였습니다')
+                    window.location.href = `/gooduser/cartview/cartview/a`
+                }
+                
+            })
+            
+            //frm.submit();
+        }
+
+        function call_pay_form()
+        {
+            
+            var v_frm = document.order_info;
+            var PayUrl = v_frm.PayUrl.value;
+            // 인코딩 방식에 따른 변경 -- Start
+            if(v_frm.encoding_trans == undefined)
+            {
+                
+                v_frm.action = PayUrl;
+            }
+            else
+            {
+                // encoding_trans "UTF-8" 인 경우
+                if(v_frm.encoding_trans.value == "UTF-8")
+                {
+                    
+                    v_frm.action = PayUrl.substring(0,PayUrl.lastIndexOf("/"))  + "/jsp/encodingFilter/encodingFilter.jsp";
+                    v_frm.PayUrl.value = PayUrl;
+                }
+                else
+                {
+                    
+                    v_frm.action = PayUrl;
+                }
+            }
+        
+            if (v_frm.Ret_URL.value == "")
+            {
+                /* Ret_URL값은 현 페이지의 URL 입니다. */
+                alert("연동시 Ret_URL을 반드시 설정하셔야 됩니다.");
+                return false;
+            }
+            else
+            {
+                // alert("취소되었습니다");
+                // window.location.href = `/gooduser/cartview/cartview/a`
+                 v_frm.submit();
+            }
+        }
+        
+        /* kcp 통신을 통해 받은 암호화 정보 체크 후 결제 요청 (변경불가) */
+        function chk_pay()
+        {
+            
+            self.name = "tar_opener";
+            var order_info = document.pay_form;
+            if (order_info.res_cd.value != "" )
+            {   
+                if (order_info.res_cd.value != "0000" )
+                {
+                            
+                    if (order_info.res_cd.value == "3001")
+                    {
+                        alert("사용자가 취소하였습니다.");
+                        window.location.href = `/gooduser/cartview/cartview/a`
+                    }
+                    //order_info.res_cd.value = "";
+                    //location.href = "/mobile_sample/trade_reg"; // 샘플에서는 거래등록 페이지로 이동
+                }
+                
+            }
+            
+            if (order_info.enc_info.value)
+            call_pay_form();
+        }
+
+    </script>
+    <script type="text/javascript" defer>
+        async function cartData(){
+            var bagId = localStorage.getItem('buy')
+            const getuserId = window.location.search;
+            const params = new URLSearchParams(getuserId);
+            const userId = parseInt(params.get("u"));
+            const buyType = params.get("t");
+            var getcartData, url1, reqUser
+            
+            var tmparr = bagId.split(',')
+            
+            // if (buyType ==='Y') {
+            //     url1 = '/gooduser/api/v1/payment_product_api/payment_search_id_buy_multi'
+            //     reqUser = {memberId : userId, bagId:tmparr[0]}
+            // }else{
+                url1 = '/gooduser/api/v1/bag/insert_total_payment_price'
+                bagIds = {bagIds: tmparr}
+            // }
+                
+            
+            await axios.post(url1,bagIds,{t: localStorage.getItem('T')}).then(res=>{
+                getcartData = res.data.data
+                
+            })
+            
+            return getcartData
+        }
+
+        
+    </script>
+</head>
+<body>
+<!-- <div id="loadinglayer" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; background: url(loading.gif) no-repeat center center rgba(0,0,0,0.7);"></div> -->
+<form name="order_info" method="post">
+    <!-- header -->
+    <!-- //header -->
+    <!-- contents -->
+    <div id="skipCont" class="contents">
+        
+        <!--
+            ==================================================================
+                1. 주문정보 입력                                                       
+            ------------------------------------------------------------------
+            결제에 필요한 주문 정보를 입력 및 설정합니다.                           
+            ------------------------------------------------------------------
+        -->
+        <!-- 주문정보 -->
+        <!-- <h2 class="title-type-3">주문정보</h2>
+        <ul class="list-type-1"> -->
+            <!-- 주문번호(ordr_idxx) -->
+                <input type="hidden" name="ordr_idxx" value="" maxlength="40" readonly />
+            <!-- 상품명(good_name) -->
+                <input type="hidden" name="good_name" value="" readonly />
+            <!-- 결제금액(good_mny) - ※ 필수 : 값 설정시 ,(콤마)를 제외한 숫자만 입력하여 주십시오. -->
+                <input type="hidden" name="good_mny" value="" maxlength="9" readonly />
+            <!-- 주문자명(buyr_name) -->
+                <input type="hidden" name="buyr_name" value="" />
+            <!-- 주문자 연락처1(buyr_tel1) -->
+                <input type="hidden" name="buyr_tel1" value="" />
+            <!-- 휴대폰번호(buyr_tel2) -->
+                <input type="hidden" name="buyr_tel2" value="" />
+            <!-- 주문자 E-mail(buyr_mail) -->
+                <input type="hidden" name="buyr_mail" value="" />
+        <div Class="Line-Type-1"></div>
+        <ul class="list-btn-2">
+            <!-- <li class="pc-only-show"><a href="/" class="btn-type-3 pc-wd-2">뒤로</a></li>
+            <li><a href="#none" onclick="call_pay_form();" class="btn-type-2 pc-wd-3">결제요청</a></li>  -->
+        </ul>
+    </div>
+    <!-- //contents -->
+
+    <!--//footer-->
+    <!-- 공통정보 -->
+    <input type="hidden" name="req_tx"          value="pay" />              <!-- 요청 구분 -->
+    <input type="hidden" name="shop_name"       value="삼성물산복지몰" />        
+    
+    <!--운영-->
+    <input type="hidden" name="site_cd"         value="AIG11" />    
+    <!-- 개발 -->
+    <!-- <input type="hidden" name="site_cd"         value="T0000" />     -->
+
+    <input type="hidden" name="currency"        value="410"/>               <!-- 통화 코드 -->
+    <!-- 인증시 필요한 파라미터(변경불가)-->
+    <input type="hidden" name="escw_used"       value="N" /> 
+    <input type="hidden" name="pay_method"      value="CARD" />
+    <input type="hidden" name="ActionResult"    value="" />
+    <input type="hidden" name="van_code"        value="" />
+    <!-- 신용카드 설정 -->
+    <input type="hidden" name="quotaopt"        value="12"/> <!-- 최대 할부개월수 -->
+    <!-- 가상계좌 설정 -->
+    <input type="hidden" name="ipgm_date"       value="" />
+    <!-- 리턴 URL (kcp와 통신후 결제를 요청할 수 있는 암호화 데이터를 전송 받을 가맹점의 주문페이지 URL) -->
+
+    
+    <!-- production:  https://goodshop.golfsamsung.com/gooduser-->
+    <!-- staging :  https://qagoodshop.golfsamsung.com/gooduser-->
+
+    <!--운영-->
+    <input type="hidden" name="Ret_URL" value="https://goodshop.golfsamsung.com/gooduser/api/v1/payment/mobile/complete" />
+    <!--테스트-->
+<!--    <input type="hidden" name="Ret_URL" value="https://qagoodshop.golfsamsung.com/gooduser/api/v1/payment/mobile/complete" />-->
+    <!--개발-->
+    <!-- <input type="hidden" name="Ret_URL"         value="http://localhost:8080/gooduser/api/v1/payment/mobile/complete" /> -->
+    
+
+
+    <!-- 화면 크기조정
+    <input type="hidden" name="tablet_size"     value="1.0 " />
+
+     거래등록 응답값 -->
+    <input type="hidden" name="approval_key" id="approval" value=""/>
+    <input type="hidden" name="traceNo"                    value="" />
+    <input type="hidden" name="PayUrl"                     value="" />
+    <input type="hidden" name="encoding_trans" value="UTF-8" />
+</form>
+
+<form name="pay_form" method="post" >
+    <input type="hidden" name="req_tx"         value="" />               <!-- 요청 구분          -->
+    <input type="hidden" name="res_cd"         value="" />               <!-- 결과 코드          -->
+    <!-- 운영      -->
+    <input type="hidden" name="site_cd" id="site_cd"        value="AIG11" />              
+<!-- 개발      -->
+    <!-- <input type="hidden" name="site_cd" id="site_cd"        value="T0000" />     -->
+    
+    
+    <input type="hidden" name="tran_cd"        value="" />              <!-- 트랜잭션 코드      -->
+    <input type="hidden" name="ordr_idxx"      value="" />            <!-- 주문번호           -->
+    <input type="hidden" name="good_mny"       value="" />             <!-- 휴대폰 결제금액    -->
+    <input type="hidden" name="good_name"      value="" />            <!-- 상품명             -->
+    <input type="hidden" name="buyr_name"      value="" />            <!-- 주문자명           -->
+    <input type="hidden" name="buyr_tel1"      value="" />            <!-- 주문자 전화번호    -->
+    <input type="hidden" name="buyr_tel2"      value="" />            <!-- 주문자 휴대폰번호  -->
+    <input type="hidden" name="buyr_mail"      value="" />            <!-- 주문자 E-mail      -->
+    <input type="hidden" name="enc_info"       value="" />
+    <input type="hidden" name="enc_data"       value="" />
+    <input type="hidden" name="use_pay_method" value="CARD" />
+    <input type="hidden" name="pay_method" value="CARD" />
+
+    <!-- 운영      -->
+    <input type="hidden" name="Ret_URL" value="https://goodshop.golfsamsung.com/gooduser/api/v1/payment/mobile/complete" />
+    <!-- 테스트      -->
+<!--     <input type="hidden" name="Ret_URL" value="https://qagoodshop.golfsamsung.com/gooduser/api/v1/payment/mobile/complete" />-->
+    <!-- 개발      -->
+    <!-- <input type="hidden" name="Ret_URL" value="http://localhost:8080/gooduser/api/v1/payment/mobile/complete" /> -->
+    
+</form>
+</body>
+</html>

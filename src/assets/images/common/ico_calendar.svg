@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22.5" height="22.5" viewBox="0 0 22.5 22.5">
+  <g id="달력아이콘" transform="translate(0.25 0.25)">
+    <g id="그룹_556" data-name="그룹 556">
+      <g id="그룹_547" data-name="그룹 547" transform="translate(0 2.076)">
+        <g id="그룹_546" data-name="그룹 546">
+          <path id="패스_866" data-name="패스 866" d="M17.7,42.667a.474.474,0,1,0,0,.949,3.338,3.338,0,0,1,3.348,3.321V58.321A3.338,3.338,0,0,1,17.7,61.642H4.3A3.338,3.338,0,0,1,.957,58.321V46.936A3.338,3.338,0,0,1,4.3,43.616a.474.474,0,1,0,0-.949A4.292,4.292,0,0,0,0,46.936V58.321a4.292,4.292,0,0,0,4.3,4.269H17.7A4.292,4.292,0,0,0,22,58.321V46.936A4.292,4.292,0,0,0,17.7,42.667Z" transform="translate(0 -42.667)" fill="#222" stroke="#222" stroke-width="0.5"/>
+        </g>
+      </g>
+      <g id="그룹_549" data-name="그룹 549" transform="translate(7.366 2.076)">
+        <g id="그룹_548" data-name="그룹 548">
+          <path id="패스_867" data-name="패스 867" d="M177.414,42.667h-6.229a.519.519,0,1,0,0,1.038h6.229a.519.519,0,1,0,0-1.038Z" transform="translate(-170.666 -42.667)" fill="#222" stroke="#222" stroke-width="0.5"/>
+        </g>
+      </g>
+      <g id="그룹_551" data-name="그룹 551" transform="translate(0 6.67)">
+        <g id="그룹_550" data-name="그룹 550">
+          <path id="패스_868" data-name="패스 868" d="M21.522,149.333H.478a.521.521,0,0,0,0,1.038H21.522a.521.521,0,0,0,0-1.038Z" transform="translate(0 -149.333)" fill="#222" stroke="#222" stroke-width="0.5"/>
+        </g>
+      </g>
+      <g id="그룹_553" data-name="그룹 553" transform="translate(5.717)">
+        <g id="그룹_552" data-name="그룹 552">
+          <path id="패스_869" data-name="패스 869" d="M128.519,0A.519.519,0,0,0,128,.519V4.672a.519.519,0,0,0,1.038,0V.519A.519.519,0,0,0,128.519,0Z" transform="translate(-128)" fill="#222" stroke="#222" stroke-width="0.5"/>
+        </g>
+      </g>
+      <g id="그룹_555" data-name="그룹 555" transform="translate(15.245)">
+        <g id="그룹_554" data-name="그룹 554">
+          <path id="패스_870" data-name="패스 870" d="M341.852,0a.519.519,0,0,0-.519.519V4.672a.519.519,0,1,0,1.038,0V.519A.519.519,0,0,0,341.852,0Z" transform="translate(-341.333)" fill="#222" stroke="#222" stroke-width="0.5"/>
+        </g>
+      </g>
+    </g>
+    <line id="선_400" data-name="선 400" x2="10.844" transform="translate(5.775 13.2)" fill="none" stroke="#262628" stroke-linejoin="round" stroke-width="2" stroke-dasharray="2 2"/>
+    <line id="선_403" data-name="선 403" x2="10.844" transform="translate(5.775 16.5)" fill="none" stroke="#262628" stroke-linejoin="round" stroke-width="2" stroke-dasharray="2 2"/>
+  </g>
+</svg>
